@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    command: gunicorn main.wsgi:application --bind 0.0.0.0:8088
+    restart: always
+    # volumes:
+    #   - .:/app
+    ports:
+      - "8088:8088"
+    env_file:
+      - .env
+    

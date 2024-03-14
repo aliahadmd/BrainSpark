@@ -1,0 +1,88 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block content %}
+    <div class="blog_container">
+        <h2>Profile</h2>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div>
+                <label for="id_profile_photo">Profile Photo:</label>
+                {{ form.profile_photo }}
+                {% if form.profile_photo.errors %}
+                    {% for error in form.profile_photo.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <label for="id_full_name">Full Name:</label>
+                {{ form.full_name }}
+                {% if form.full_name.errors %}
+                    {% for error in form.full_name.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <label for="id_employee">Employee:</label>
+                {{ form.employee }}
+                {% if form.employee.errors %}
+                    {% for error in form.employee.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <label for="id_about_me">About Me:</label>
+                {{ form.about_me }}
+                {% if form.about_me.errors %}
+                    {% for error in form.about_me.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <label for="id_university_name">university/School/Company Name:</label>
+                {{ form.university_name }}
+                {% if form.university_name.errors %}
+                    {% for error in form.university_name.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                {% endif %}
+            </div>
+            <div>
+                <label for="id_major">Major/Department/Class:</label>
+                {{ form.major }}
+                {% if form.major.errors %}
+                    {% for error in form.major.errors %}<span class="error">{{ error }}</span>{% endfor %}
+                {% endif %}
+            </div>
+            <button type="submit">Update Profile</button>
+        </form>
+        <div>
+            <hr>
+            {% if user.profile_photo %}
+                <img src="{{ user.profile_photo.url }}"
+                     alt="Profile Photo"
+                     width="100"
+                     height="100">
+            {% else %}
+                <p>No profile photo available</p>
+            {% endif %}
+            <hr>
+            <p>Full Name: {{ user.full_name }}</p>
+            <p>Email: {{ user.email }}</p>
+            <hr>
+            <p>Username: {{ user.username }}</p>
+            <hr>
+            <p>About Me: {{ user.about_me }}</p>
+            <hr>
+            <p>university/School/Company Name: {{ user.university_name }}</p>
+            <hr>
+            <p>
+                Employee:
+                {% if user.employee %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </p>
+            <hr>
+            <p>Major/Department/Class: {{ user.major }}</p>
+            <hr>
+        </div>
+        <div>
+            <a href="{% url 'userauth:logout' %}">Logout</a>
+        </div>
+    </div>
+{% endblock content %}

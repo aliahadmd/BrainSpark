@@ -1,0 +1,7 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block content %}
+    <div class= "blog_container">
+        {% if home %}<div class="container">{{ home.content|safe }}</div>{% endif %}
+    </div>
+{% endblock content %}

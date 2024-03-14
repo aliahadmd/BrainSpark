@@ -1,0 +1,28 @@
+{% extends "_base.html" %}
+{% block content %}
+    <div class="blog_container_course">
+        <div class="course_container_list">{% include "course/base_lesson.html" %}</div>
+        <div class="course_container_list">
+            <div>
+                {% if lesson.video %}
+                    <video id="my-video"
+                           class="video-js"
+                           controls
+                           preload="auto"
+                           data-setup='{"fluid": true}'>
+                        <source src="{{ lesson.get_video_url }}" type="video/mp4" />
+                        <p class="vjs-no-js">
+                            To view this video please enable JavaScript, and consider upgrading to a
+                            web browser that
+                            <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+                        </p>
+                    </video>
+                {% else %}
+                    No video available
+                {% endif %}
+            </div>
+            <h2>{{ lesson.title }}</h2>
+            <div> {{ lesson.description | safe }}</div>
+        </div>
+    </div>
+{% endblock content %}

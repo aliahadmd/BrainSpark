@@ -1,0 +1,24 @@
+<nav class="navbar">
+    <div class="navbar-toggle" id="navbarToggle">
+        <div class="toggle-icon"></div>
+    </div>
+    <ul class="navbar-menu" id="navbarMenu">
+        <li>
+            <a href="{% url "home:home" %}">Home</a>
+        </li>
+        <li>
+            <a href="{% url "course:category_list" %}">Course</a>
+        </li>
+        {% if user.is_authenticated %}
+            <li>
+                <a href="{% url "userauth:profile" %}">Profile</a>
+            </li>
+        {% else %}
+            <li>
+                <a href="{% url "userauth:login" %}">Login</a>
+                <span>/</span>
+                <a href="{% url "userauth:register" %}">Register</a>
+            </li>
+        {% endif %}
+    </ul>
+</nav>

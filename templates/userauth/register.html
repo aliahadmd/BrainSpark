@@ -1,0 +1,33 @@
+{% extends "_base.html" %}
+{% load static %}
+{% block content %}
+    <div class="blog_container">
+        <h2>Register</h2>
+        <form method="post">
+            {% csrf_token %}
+            <div>
+                {{ form.username.label_tag }}
+                {{ form.username }}
+                {% for error in form.username.errors %}<span class="error">{{ error }}</span>{% endfor %}
+            </div>
+            <div>
+                {{ form.email.label_tag }}
+                {{ form.email }}
+                {% for error in form.email.errors %}<span class="error">{{ error }}</span>{% endfor %}
+            </div>
+            <div>
+                {{ form.password1.label_tag }}
+                {{ form.password1 }}
+                {% for error in form.password1.errors %}<span class="error">{{ error }}</span>{% endfor %}
+            </div>
+            <div>
+                {{ form.password2.label_tag }}
+                {{ form.password2 }}
+                {% for error in form.password2.errors %}<span class="error">{{ error }}</span>{% endfor %}
+            </div>
+            <div>
+                <button type="submit">Sign Up</button>
+            </div>
+        </form>
+    </div>
+{% endblock content %}
