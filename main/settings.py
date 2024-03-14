@@ -173,3 +173,18 @@ AWS_S3_ENDPOINT_URL = getenv("AWS_S3_ENDPOINT_URL")
 AWS_S3_ACCESS_KEY_ID = getenv("AWS_S3_ACCESS_KEY_ID")
 AWS_S3_SECRET_ACCESS_KEY = getenv("AWS_S3_SECRET_ACCESS_KEY")
 AWS_S3_SIGNATURE_VERSION = getenv("AWS_S3_SIGNATURE_VERSION")
+
+
+
+
+CORS_ORIGIN_WHITELIST = (
+    'https://brainspark.aliahad.com',
+    'https://aliahad.com',
+    'http://0.0.0.0:8088',
+)
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://brainspark.aliahad.com',
+    'https://aliahad.com',
+    'http://0.0.0.0:8088',
+]
