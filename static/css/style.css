@@ -253,7 +253,7 @@ a:active {
   background-color: rgba(255, 154, 48, 0.8);
 }
 
-img {
+.home-img {
   display: flex;
   width: 100%;
 }
