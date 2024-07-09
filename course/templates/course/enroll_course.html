@@ -1,0 +1,12 @@
+{% extends 'course/base.html' %}
+
+{% block title %}Enroll in {{ course.title }}{% endblock %}
+
+{% block content %}
+    <h1>Enroll in {{ course.title }}</h1>
+    <p>Course Price: ${{ course.price }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+    </form>
+{% endblock %}

@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 class Course(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
+    cover = models.ImageField(upload_to='course_cover', blank=True, null=True)
     instructor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='courses')
     price = models.DecimalField(max_digits=6, decimal_places=2)
     created_at = models.DateTimeField(auto_now_add=True)
@@ -15,8 +16,9 @@ class Course(models.Model):
 class Lesson(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='lessons')
     title = models.CharField(max_length=200)
-    video_url = models.URLField()
+    video = models.FileField(upload_to='course_videos', blank=True, null=True)
     order = models.PositiveIntegerField()
+    duration = models.PositiveIntegerField(help_text="Duration in minutes", blank=True, null=True)
 
     class Meta:
         ordering = ['order']
@@ -45,3 +47,12 @@ class Payment(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.course.title} - ${self.amount}"
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    bio = models.TextField(blank=True)
+    website = models.URLField(blank=True)
+
+    def __str__(self):
+        return self.user.username

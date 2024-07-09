@@ -1,0 +1,28 @@
+{% extends 'course/base.html' %}
+
+{% block title %}Available Courses{% endblock %}
+
+{% block content %}
+<form class="mb-4" method="get">
+    <div class="input-group">
+        <input type="text" class="form-control" name="q" placeholder="Search courses" value="{{ request.GET.q }}">
+        <button class="btn btn-outline-secondary" type="submit">Search</button>
+    </div>
+</form>
+    <h1>Available Courses</h1>
+    <div class="row">
+        {% for course in courses %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <img src="{{ course.cover.url }}" alt="" class="img-fluid mb-3">
+                        <h5 class="card-title">{{ course.title }}</h5>
+                        <p class="card-text">{{ course.description|truncatewords:20 }}</p>
+                        <p class="card-text"><small class="text-muted">Instructor: {{ course.instructor }}</small></p>
+                        <a href="{% url 'course_detail' course.id %}" class="btn btn-primary">View Course</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

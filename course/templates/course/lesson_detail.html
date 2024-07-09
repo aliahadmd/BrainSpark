@@ -1,0 +1,27 @@
+{% extends 'course/base.html' %}
+
+{% block title %}{{ lesson.title }} - {{ course.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ lesson.title }}</h1>
+    <p>Course: {{ course.title }}</p>
+    
+    <div class="embed-responsive embed-responsive-16by9 mb-4">
+        <iframe class="embed-responsive-item" src="{{ lesson.video_url }}" allowfullscreen></iframe>
+    </div>
+
+    <nav aria-label="Lesson navigation">
+        <ul class="pagination justify-content-between">
+            {% if previous_lesson %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'lesson_detail' course.id previous_lesson.id %}">Previous Lesson</a>
+                </li>
+            {% endif %}
+            {% if next_lesson %}
+                <li class="page-item">
+                    <a class="page-link" href="{% url 'lesson_detail' course.id next_lesson.id %}">Next Lesson</a>
+                </li>
+            {% endif %}
+        </ul>
+    </nav>
+{% endblock %}

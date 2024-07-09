@@ -1,0 +1,25 @@
+{% extends 'course/base.html' %}
+
+{% block title %}{{ course.title }}{% endblock %}
+
+{% block content %}
+    <h1>{{ course.title }}</h1>
+    <p>{{ course.description }}</p>
+    <p>Instructor: {{ course.instructor }}</p>
+    <p>Price: ${{ course.price }}</p>
+    
+    {% if is_enrolled %}
+        <h2>Course Content</h2>
+        <ul class="list-group">
+            {% for lesson in lessons %}
+                <li class="list-group-item">
+                    <a href="{% url 'lesson_detail' course.id lesson.id %}">{{ lesson.title }}</a>
+                </li>
+            {% empty %}
+                <li class="list-group-item">No lessons available yet.</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <a href="{% url 'enroll_course' course.id %}" class="btn btn-primary">Enroll Now</a>
+    {% endif %}
+{% endblock %}
