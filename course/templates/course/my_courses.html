@@ -9,6 +9,7 @@
             <div class="col-md-4 mb-4">
                 <div class="card">
                     <div class="card-body">
+                        <img src="{{ enrollment.course.cover.url }}" alt="" class="img-fluid mb-3">
                         <h5 class="card-title">{{ enrollment.course.title }}</h5>
                         <p class="card-text">Enrolled on: {{ enrollment.enrolled_at|date:"F d, Y" }}</p>
                         <a href="{% url 'course_detail' enrollment.course.id %}" class="btn btn-primary">Go to Course</a>
