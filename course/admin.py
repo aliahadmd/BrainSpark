@@ -1,11 +1,15 @@
 from django.contrib import admin
 from course.models import Course, Lesson, Enrollment, Payment
+from django_summernote.admin import SummernoteModelAdmin
 
 @admin.register(Course)
-class CourseAdmin(admin.ModelAdmin):
+class CourseAdmin(SummernoteModelAdmin):
     list_display = ('title', 'instructor', 'price', 'created_at')
+    summernote_fields = ('description',)
     list_filter = ('instructor', 'created_at')
     search_fields = ('title', 'description', 'instructor__username')
+
+    
 
 @admin.register(Lesson)
 class LessonAdmin(admin.ModelAdmin):

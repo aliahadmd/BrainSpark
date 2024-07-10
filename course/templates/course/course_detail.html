@@ -4,7 +4,7 @@
 
 {% block content %}
     <h1>{{ course.title }}</h1>
-    <p>{{ course.description }}</p>
+    <p>{{ course.description | safe }}</p>
     <p>Instructor: {{ course.instructor }}</p>
     <p>Price: ${{ course.price }}</p>
     

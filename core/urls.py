@@ -30,6 +30,7 @@ urlpatterns = [
     path("accounts/profile/", TemplateView.as_view(template_name="profile.html")),
     path('admin/', admin.site.urls),
     path("i18n/", include("django.conf.urls.i18n")),
+    path('summernote/', include('django_summernote.urls')),
 ]
 
 urlpatterns+= static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     "allauth.mfa",
     "allauth.usersessions",
     'widget_tweaks',
+    'django_summernote',
 ]
 
 MIDDLEWARE = [
@@ -204,3 +205,6 @@ AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
 AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
 AWS_S3_SIGNATURE_VERSION = os.getenv('AWS_S3_SIGNATURE_VERSION')
 
+
+# text edutor dj summarnote
+SUMMERNOTE_THEME = 'bs5'  # Show summernote with Bootstrap5
