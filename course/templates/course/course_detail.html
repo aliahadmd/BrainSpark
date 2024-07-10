@@ -3,9 +3,14 @@
 {% block title %}{{ course.title }}{% endblock %}
 
 {% block content %}
-    <h1>{{ course.title }}</h1>
+    <div class='row'>
+        <div class="col-md-7 col-sm-12">
+            <img src="{{ course.cover.url }}" alt="" class="img-fluid mb-3">
+            <h1>{{ course.title }}</h1>
     <p>{{ course.description | safe }}</p>
-    <p>Instructor: {{ course.instructor }}</p>
+        </div>
+        <div class="col-md-5 col-sm-12">
+        <p>Instructor: {{ course.instructor }}</p>
     <p>Price: ${{ course.price }}</p>
     
     {% if is_enrolled %}
@@ -22,4 +27,9 @@
     {% else %}
         <a href="{% url 'enroll_course' course.id %}" class="btn btn-primary">Enroll Now</a>
     {% endif %}
+    </div>
+    </div>
+
+    
+      
 {% endblock %}
