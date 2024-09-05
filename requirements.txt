@@ -17,6 +17,7 @@ django-summernote==0.8.20.0
 django-widget-tweaks==1.5.0
 djlint==1.34.1
 EditorConfig==0.12.4
+gunicorn==23.0.0
 html-tag-names==0.1.2
 html-void-elements==0.1.0
 idna==3.7
@@ -24,6 +25,7 @@ jmespath==1.0.1
 jsbeautifier==1.15.1
 json5==0.9.25
 Markdown==3.5.2
+packaging==24.1
 pathspec==0.12.1
 pillow==10.4.0
 psycopg2-binary==2.9.9
