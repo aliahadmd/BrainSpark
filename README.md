@@ -1,3 +1,7 @@
+# login
+ username : `aliahadmd3`
+ password : `aliahadmd3`
+
 # BrainSpark: Online Course Platform
 
 BrainSpark is a robust, Django-based online course platform that allows instructors to create and sell courses, and students to enroll and learn at their own pace.
