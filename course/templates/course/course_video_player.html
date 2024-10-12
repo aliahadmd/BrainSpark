@@ -10,9 +10,8 @@
         padding-bottom: 56.25%; /* 16:9 aspect ratio */
         height: 0;
         overflow: hidden;
-        max-width: 640px;
-        margin: 0 auto; 
-        
+        max-width: 100%;
+        margin: 0 auto;
     }
     .video-container video {
         position: absolute;
@@ -22,42 +21,93 @@
         height: 100%;
     }
     .course-content {
-        max-height: 80vh;
+        height: calc(100vh - 56px); /* Adjust based on your navbar height */
         overflow-y: auto;
     }
+    .sidebar {
+        position: fixed;
+        top: 56px; /* Adjust based on your navbar height */
+        bottom: 0;
+        left: -300px;
+        z-index: 1000;
+        width: 300px;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: #f8f9fa;
+        border-right: 1px solid #dee2e6;
+        transition: 0.3s;
+    }
+    .sidebar.active {
+        left: 0;
+    }
+    .overlay {
+        display: none;
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0,0,0,0.5);
+        z-index: 999;
+        cursor: pointer;
+    }
+    #sidebarCollapse {
+        position: fixed;
+        top: 70px;
+        left: 10px;
+        z-index: 1001;
+    }
+    @media (min-width: 768px) {
+        .sidebar {
+            left: 0;
+        }
+        #sidebarCollapse {
+            display: none;
+        }
+        .main-content {
+            margin-left: 300px;
+        }
+    }
+
+    #sidebarCollapse {
+        position: fixed;
+        top: 70px;
+        left: 10px;
+        z-index: 1001;
+        background-color: #007bff;
+        border: none;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    #sidebarCollapse i {
+        color: white;
+    }
+
+    #sidebarCollapse {
+        margin-left: 10px;
+    }
+ 
 </style>
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid">
-    <div class="row">
-        <!-- Video Player -->
-        <div class="col-md-8">
-            <h1>{{ lesson.title }}</h1>
-            <div class="video-container mb-3">
-                <video id="lessonVideo" controls controlsList="nodownload">
-                    <source src="{{ lesson.video.url }}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <nav aria-label="Lesson navigation">
-                <ul class="pagination justify-content-between">
-                    {% if previous_lesson %}
-                        <li class="page-item">
-                            <a class="page-link" href="{% url 'lesson_detail' course.id previous_lesson.id %}">Previous Lesson</a>
-                        </li>
-                    {% endif %}
-                    {% if next_lesson %}
-                        <li class="page-item">
-                            <a class="page-link" href="{% url 'lesson_detail' course.id next_lesson.id %}">Next Lesson</a>
-                        </li>
-                    {% endif %}
-                </ul>
-            </nav>
+<div class="container-fluid p-0">
+    <div class="row no-gutters">
+        <!-- Hamburger Menu Button -->
+        <div class="col-12 d-md-none mb-3">
+            <button type="button" id="sidebarCollapse" class="btn btn-primary">
+                <i class="fas fa-bars"></i>
+            </button>
         </div>
-        
-        <!-- Course Content -->
-        <div class="col-md-4">
+
+        <!-- Overlay -->
+        <div class="overlay"></div>
+
+        <!-- Course Content Sidebar -->
+        <nav id="sidebar" class="sidebar">
             <div class="card">
                 <div class="card-header">
                     Course content
@@ -69,12 +119,12 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="lesson{{ course_lesson.id }}" {% if course_lesson.id <= lesson.id %}checked{% endif %}>
                                     <label class="form-check-label" for="lesson{{ course_lesson.id }}">
-                                        <a href="{% url 'lesson_detail' course.id course_lesson.id %}" class="text-black text-decoration-none {% if course_lesson.id == lesson.id %}text-white{% endif %}" data-lesson-id="{{ course_lesson.id }}">
+                                        <a href="{% url 'lesson_detail' course.id course_lesson.id %}" class="text-decoration-none {% if course_lesson.id == lesson.id %}text-white{% else %}text-dark{% endif %}" data-lesson-id="{{ course_lesson.id }}">
                                             {{ course_lesson.title }}
                                         </a>
                                     </label>
                                 </div>
-                                <small class="text-black {% if course_lesson.id == lesson.id %}text-white{% endif %}">{{ course_lesson.duration }} min</small>
+                                <small class="{% if course_lesson.id == lesson.id %}text-white{% else %}text-muted{% endif %}">{{ course_lesson.duration }} min</small>
                                 {% if course_lesson.resources %}
                                     <button class="btn btn-sm btn-outline-secondary float-end">Resources</button>
                                 {% endif %}
@@ -83,36 +133,69 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </nav>
+
+        <!-- Video Player -->
+        <main class="col main-content">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 class="mt-4">{{ lesson.title }}</h1>
+                        <div class="video-container mb-3">
+                            <video id="lessonVideo" controls controlsList="nodownload">
+                                <source src="{{ lesson.video.url }}" type="video/mp4">
+                                Your browser does not support the video tag.
+                            </video>
+                        </div>
+                        <nav aria-label="Lesson navigation">
+                            <ul class="pagination justify-content-between">
+                                {% if previous_lesson %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{% url 'lesson_detail' course.id previous_lesson.id %}">Previous Lesson</a>
+                                    </li>
+                                {% endif %}
+                                {% if next_lesson %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="{% url 'lesson_detail' course.id next_lesson.id %}">Next Lesson</a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
 </div>
 {% endblock %}
 
 {% block extra_js %}
-{% comment %} <script>
+<script>
     document.addEventListener('DOMContentLoaded', function() {
-        const lessonLinks = document.querySelectorAll('.course-content a[data-lesson-id]');
-        lessonLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const lessonId = this.getAttribute('data-lesson-id');
-                fetch(`{% url 'get_lesson_video_url' %}?lesson_id=${lessonId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        const videoPlayer = document.getElementById('lessonVideo');
-                        videoPlayer.src = data.video_url;
-                        videoPlayer.play();
-                        // Update the browser's URL without reloading the page
-                        history.pushState(null, '', this.href);
-                        // Update the lesson title
-                        document.querySelector('h1').textContent = this.textContent.trim();
-                        // Update active class
-                        document.querySelector('.list-group-item.active').classList.remove('active');
-                        this.closest('.list-group-item').classList.add('active');
-                    })
-                    .catch(error => console.error('Error:', error));
+        var sidebar = document.getElementById('sidebar');
+        var sidebarCollapse = document.getElementById('sidebarCollapse');
+        var overlay = document.querySelector('.overlay');
+
+        sidebarCollapse.addEventListener('click', function() {
+            sidebar.classList.toggle('active');
+            overlay.style.display = sidebar.classList.contains('active') ? 'block' : 'none';
+        });
+
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.style.display = 'none';
+        });
+
+        // Close sidebar when clicking on a lesson link (for mobile)
+        var lessonLinks = document.querySelectorAll('.course-content a');
+        lessonLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                if (window.innerWidth < 768) {
+                    sidebar.classList.remove('active');
+                    overlay.style.display = 'none';
+                }
             });
         });
     });
-</script> {% endcomment %}
+</script>
 {% endblock %}
